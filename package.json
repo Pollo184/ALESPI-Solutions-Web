@@ -1,0 +1,33 @@
+{
+  "name": "alespi-soluions-web",
+  "version": "1.0.0",
+  "description": "Landing page corporativa de ALESPI Solutions para presentar servicios HVAC, experiencia y contacto.",
+  "private": true,
+  "main": "script.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./input.css -o ./output.css --minify",
+    "watch:css": "tailwindcss -i ./input.css -o ./output.css --watch",
+    "build": "npm run build:css",
+    "dev": "npm run watch:css",
+    "dev:css": "npm run watch:css",
+    "serve": "live-server --port=8080",
+    "start": "npm run serve",
+    "preview": "npm run build && npm run serve",
+    "test": "echo \"No automated tests configured\""
+  },
+  "keywords": [
+    "alespi",
+    "hvac",
+    "landing-page",
+    "tailwindcss",
+    "frontend"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.27",
+    "live-server": "^1.2.2",
+    "postcss": "^8.5.9",
+    "tailwindcss": "^3.4.1"
+  }
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALESPI Solutions - Expertos en Aire Acondicionado</title>
+    <link rel="stylesheet" href="output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-white min-h-screen flex flex-col">
+    <div data-include="src/navbar.html"></div>
+
+    <div id="tabs-container" class="flex-1 flex flex-col">
+      <div data-tab-content="inicio" class="tab-content tab-content-fill tab-content-hero active">
+        <div data-include="src/hero.html"></div>
+        <div data-include="src/valores.html"></div>
+      </div>
+
+      <div data-tab-content="servicios" class="tab-content hidden">
+        <div data-include="src/servicios.html"></div>
+      </div>
+
+      <div data-tab-content="expertiz" class="tab-content hidden">
+        <div data-include="src/expertiz.html"></div>
+      </div>
+
+      <div data-tab-content="credenciales" class="tab-content hidden">
+        <div data-include="src/estadisticas.html"></div>
+        <div data-include="src/credenciales.html"></div>
+      </div>
+
+      <div data-tab-content="contacto" class="tab-content hidden">
+        <div data-include="src/contacto.html"></div>
+      </div>
+    </div>
+    <div data-include="src/footer.html"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
