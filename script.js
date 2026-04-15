@@ -68,10 +68,12 @@ function activateTab(tabName) {
 function initializeTabs() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabLinks = document.querySelectorAll('[data-open-tab]');
+    const navElement = document.querySelector('nav');
 
     tabButtons.forEach((button) => {
         button.addEventListener('click', function() {
             activateTab(this.getAttribute('data-tab'));
+            navElement?.classList.remove('expanded');
         });
     });
 
@@ -79,6 +81,7 @@ function initializeTabs() {
         link.addEventListener('click', function(event) {
             event.preventDefault();
             activateTab(this.getAttribute('data-open-tab'));
+            navElement?.classList.remove('expanded');
         });
     });
 }

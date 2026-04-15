@@ -1,13 +1,13 @@
 <section class="contacto py-20 md:py-32 bg-gradient-to-b from-light to-gray-100" id="contacto">
   <div class="container mx-auto px-5">
-    <h2 class="section-title mt-0">Ponte en Contacto</h2>
-    <p class="max-w-4xl mx-auto mt-14 text-center text-lg text-gray-600 leading-relaxed animate-fadeIn">
+    <h2 class="section-title mt-0 animate-slideUp">Ponte en Contacto</h2>
+    <p class="max-w-4xl mx-auto mt-14 text-center text-lg text-gray-600 leading-relaxed animate-fadeIn" style="animation-delay: 0.1s;">
       Si requiere una cotizacion, una evaluacion tecnica o informacion sobre nuestros servicios, nuestro equipo esta listo para atenderle.
     </p>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-12 mt-16 md:mt-20">
       <div class="contacto-info">
-        <div class="info-item flex gap-6 items-start animate-slideUp" style="animation-delay: 0.1s;">
+        <div class="info-item flex flex-col sm:flex-row gap-4 sm:gap-6 items-start animate-slideUp" style="animation-delay: 0.1s;">
           <div class="gradient-primary w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl flex-shrink-0 hover:scale-110 transition-transform duration-300 hover:shadow-lg hover:shadow-primary-500/50">
             <i class="fas fa-map-marker-alt group-hover:animate-pulse"></i>
           </div>
@@ -18,7 +18,7 @@
         </div>
 
         <a href="https://www.google.com/maps/search/?api=1&query=Calzada+Zavaleta+313-A+Plaza+Bosques+de+Zavaleta+int.+19+Puebla" target="_blank" rel="noopener noreferrer" class="block mt-8 rounded-3xl overflow-hidden bg-white shadow-xl border border-primary-500/10 animate-slideUp group" style="animation-delay: 0.15s;">
-          <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-5 sm:px-6 py-4 border-b border-gray-100">
             <div>
               <h5 class="text-lg font-bold text-dark group-hover:text-primary-500 transition-colors duration-300">Ver ubicacion en Google Maps</h5>
               <p class="text-sm text-gray-500">Haz clic para abrir la ruta o ampliar el mapa</p>
@@ -37,7 +37,7 @@
           </div>
         </a>
 
-        <div class="info-item flex gap-6 items-start mt-8 animate-slideUp" style="animation-delay: 0.2s;">
+        <div class="info-item flex flex-col sm:flex-row gap-4 sm:gap-6 items-start mt-8 animate-slideUp" style="animation-delay: 0.2s;">
           <div class="gradient-primary w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl flex-shrink-0 hover:scale-110 transition-transform duration-300 hover:shadow-lg hover:shadow-primary-500/50">
             <i class="fas fa-phone group-hover:animate-pulse"></i>
           </div>
@@ -47,7 +47,7 @@
           </div>
         </div>
 
-        <div class="info-item flex gap-6 items-start mt-8 animate-slideUp" style="animation-delay: 0.3s;">
+        <div class="info-item flex flex-col sm:flex-row gap-4 sm:gap-6 items-start mt-8 animate-slideUp" style="animation-delay: 0.3s;">
           <div class="gradient-primary w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl flex-shrink-0 hover:scale-110 transition-transform duration-300 hover:shadow-lg hover:shadow-primary-500/50">
             <i class="fas fa-envelope group-hover:animate-pulse"></i>
           </div>
@@ -57,7 +57,7 @@
           </div>
         </div>
 
-        <div class="social-links flex gap-4 mt-10 animate-slideUp" style="animation-delay: 0.4s;">
+        <div class="social-links flex flex-wrap gap-4 mt-10 animate-slideUp" style="animation-delay: 0.4s;">
           <a href="#" class="gradient-primary w-12 h-12 rounded-full flex items-center justify-center text-white text-lg hover:-translate-y-2 transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/50 hover:scale-125">
             <i class="fab fa-facebook"></i>
           </a>
@@ -73,7 +73,7 @@
         </div>
       </div>
 
-      <form class="contacto-form bg-white p-10 rounded-2xl shadow-2xl border-l-4 border-primary-500 animate-slideUp" style="animation-delay: 0.5s;" id="formularioContacto">
+      <form class="contacto-form bg-white p-6 sm:p-8 md:p-10 rounded-2xl shadow-2xl border-l-4 border-primary-500 animate-slideUp" style="animation-delay: 0.5s;" id="formularioContacto">
         <div class="form-group mb-6 animate-slideUp" style="animation-delay: 0.6s;">
           <label for="nombre" class="block mb-2 font-semibold text-dark">Nombre Completo</label>
           <input type="text" id="nombre" name="nombre" required

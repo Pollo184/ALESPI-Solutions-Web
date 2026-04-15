@@ -620,3 +620,56 @@
 .tab-content.hidden {
   display: none;
 }
+
+@media (max-width: 767px) {
+  .navbar .container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .nav-tabs {
+    width: 100%;
+    margin-top: 1rem;
+    padding-top: 0;
+    border-top: 1px solid rgba(26, 61, 115, 0.12);
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow: visible;
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: max-height 0.25s ease, opacity 0.2s ease, transform 0.25s ease, padding-top 0.25s ease;
+  }
+
+  .navbar.expanded .nav-tabs {
+    max-height: 24rem;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    padding-top: 1rem;
+  }
+
+  .tab-btn {
+    width: 100%;
+    text-align: left;
+    border-bottom-width: 1px;
+    animation: none !important;
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .hero-highlight {
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+  }
+
+  .section-title::after {
+    width: 4.5rem;
+    bottom: -14px;
+  }
+}
