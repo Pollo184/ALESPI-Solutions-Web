@@ -61,7 +61,7 @@
 
   .hero-highlight {
     @apply relative inline-block px-2 py-0 text-white;
-    text-shadow: 0 3px 10px rgba(26, 26, 46, 0.22), 0 10px 28px rgba(26, 26, 46, 0.18);
+    text-shadow: 0 3px 10px rgba(10, 22, 40, 0.28), 0 10px 28px rgba(10, 22, 40, 0.2);
   }
 
   .hero-highlight::before {
@@ -75,11 +75,11 @@
     right: 8%;
     bottom: 0.12em;
     height: 0.14em;
-    background: linear-gradient(90deg, #0066cc, #00d4ff);
+    background: linear-gradient(90deg, #1a3d73, #6f90be);
     border-radius: 9999px;
     opacity: 0.82;
     z-index: -1;
-    box-shadow: 0 8px 20px rgba(0, 102, 204, 0.18);
+    box-shadow: 0 8px 20px rgba(26, 61, 115, 0.24);
   }
 
   /* Efectos de brillo */
@@ -177,11 +177,11 @@
 /* Animación Pulse Glow */
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(0, 102, 204, 0.5);
+    box-shadow: 0 0 20px rgba(26, 61, 115, 0.45);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 0 40px rgba(0, 102, 204, 0.8);
+    box-shadow: 0 0 40px rgba(94, 127, 170, 0.65);
     transform: scale(1.02);
   }
 }
@@ -286,7 +286,7 @@
 .border-animated {
   position: relative;
   border: 2px solid transparent;
-  background: linear-gradient(white, white) padding-box, linear-gradient(45deg, #0066cc, #00d4ff) border-box;
+  background: linear-gradient(white, white) padding-box, linear-gradient(45deg, #1a3d73, #6f90be) border-box;
 }
 
 /* Efecto 3D */
@@ -306,7 +306,7 @@
 }
 
 .card-shadow-premium:hover {
-  box-shadow: 0 30px 60px rgba(0, 102, 204, 0.2);
+  box-shadow: 0 30px 60px rgba(26, 61, 115, 0.18);
 }
 
 /* ==================== ANIMACIONES ADICIONALES AVANZADAS ==================== */
@@ -407,10 +407,10 @@
 /* Animación Glow Text */
 @keyframes glowText {
   0%, 100% {
-    text-shadow: 0 0 10px rgba(0, 102, 204, 0.5), 0 0 20px rgba(0, 212, 255, 0.3);
+    text-shadow: 0 0 10px rgba(26, 61, 115, 0.45), 0 0 20px rgba(111, 144, 190, 0.28);
   }
   50% {
-    text-shadow: 0 0 20px rgba(0, 102, 204, 0.8), 0 0 40px rgba(0, 212, 255, 0.6);
+    text-shadow: 0 0 20px rgba(26, 61, 115, 0.65), 0 0 40px rgba(111, 144, 190, 0.45);
   }
 }
 
@@ -497,7 +497,7 @@
 }
 
 .animate-textGradientShift {
-  background: linear-gradient(-45deg, #0066cc, #00d4ff, #0066cc);
+  background: linear-gradient(-45deg, #1a3d73, #6f90be, #1a3d73);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -524,7 +524,7 @@
   left: 0;
   width: 0;
   height: 3px;
-  background: linear-gradient(to right, #0066cc, #00d4ff);
+  background: linear-gradient(to right, #1a3d73, #6f90be);
   transition: width 0.5s ease;
 }
 
@@ -583,7 +583,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(to right, #0066cc, #00d4ff);
+  background: linear-gradient(to right, #1a3d73, #6f90be);
   transition: width 0.4s ease;
 }
 
@@ -592,8 +592,8 @@
 }
 
 .tab-btn.tab-active {
-  color: #0066cc;
-  border-bottom-color: #0066cc;
+  color: #1a3d73;
+  border-bottom-color: #1a3d73;
 }
 
 .tab-btn.tab-active::after {
@@ -614,7 +614,7 @@
 
 .tab-content-hero,
 .tab-content-stats {
-  background: linear-gradient(90deg, #0066cc 0%, #00d4ff 100%);
+  background: linear-gradient(135deg, #0d1f39 0%, #1a3d73 45%, #6f90be 100%);
 }
 
 .tab-content.hidden {
