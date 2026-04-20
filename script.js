@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     await loadPartials();
     initializeTabs();
     initializeHamburger();
+    initializeCarousels();
     initializeContactForm();
     initializeAnchorScroll();
     initializeStatsObserver();
@@ -128,6 +129,68 @@ function initializeContactForm() {
         console.log('Formulario enviado:', { nombre, email, asunto, mensaje });
         mostrarNotificacion('Mensaje enviado exitosamente. Te contactaremos pronto.', 'success');
         formularioContacto.reset();
+    });
+}
+
+function initializeCarousels() {
+    const carousels = document.querySelectorAll('[data-carousel]');
+
+    carousels.forEach((carousel) => {
+        const slides = carousel.querySelectorAll('[data-carousel-slide]');
+        const dots = carousel.querySelectorAll('[data-carousel-dot]');
+        const prevButton = carousel.querySelector('[data-carousel-prev]');
+        const nextButton = carousel.querySelector('[data-carousel-next]');
+
+        if (!slides.length) {
+            return;
+        }
+
+        let currentIndex = 0;
+        let intervalId;
+
+        const updateCarousel = (newIndex) => {
+            currentIndex = (newIndex + slides.length) % slides.length;
+
+            slides.forEach((slide, index) => {
+                const isActive = index === currentIndex;
+                slide.classList.toggle('opacity-100', isActive);
+                slide.classList.toggle('opacity-0', !isActive);
+                slide.classList.toggle('pointer-events-none', !isActive);
+            });
+
+            dots.forEach((dot, index) => {
+                const isActive = index === currentIndex;
+                dot.classList.toggle('bg-white', isActive);
+                dot.classList.toggle('bg-white/40', !isActive);
+            });
+        };
+
+        const startAutoplay = () => {
+            clearInterval(intervalId);
+            intervalId = setInterval(() => {
+                updateCarousel(currentIndex + 1);
+            }, 4500);
+        };
+
+        prevButton?.addEventListener('click', () => {
+            updateCarousel(currentIndex - 1);
+            startAutoplay();
+        });
+
+        nextButton?.addEventListener('click', () => {
+            updateCarousel(currentIndex + 1);
+            startAutoplay();
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                updateCarousel(index);
+                startAutoplay();
+            });
+        });
+
+        updateCarousel(0);
+        startAutoplay();
     });
 }
 
