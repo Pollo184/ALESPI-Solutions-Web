@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     initializeTabs();
     initializeHamburger();
     initializeCarousels();
+    initializeServiceStories();
     initializeContactForm();
     initializeAnchorScroll();
     initializeStatsObserver();
@@ -63,6 +64,7 @@ function activateTab(tabName) {
     targetButton.classList.add('tab-active');
     activeContent.classList.remove('hidden');
     restartAnimations(activeContent);
+    initializeServiceStories();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -112,10 +114,11 @@ function initializeContactForm() {
 
         const nombre = document.getElementById('nombre').value.trim();
         const email = document.getElementById('email').value.trim();
+        const empresa = document.getElementById('empresa').value.trim();
         const asunto = document.getElementById('asunto').value.trim();
         const mensaje = document.getElementById('mensaje').value.trim();
 
-        if (!nombre || !email || !asunto || !mensaje) {
+        if (!nombre || !email || !empresa || !asunto || !mensaje) {
             mostrarNotificacion('Por favor, completa todos los campos.', 'error');
             return;
         }
@@ -126,7 +129,7 @@ function initializeContactForm() {
             return;
         }
 
-        console.log('Formulario enviado:', { nombre, email, asunto, mensaje });
+        console.log('Formulario enviado:', { nombre, email, empresa, asunto, mensaje });
         mostrarNotificacion('Mensaje enviado exitosamente. Te contactaremos pronto.', 'success');
         formularioContacto.reset();
     });
@@ -192,6 +195,102 @@ function initializeCarousels() {
         updateCarousel(0);
         startAutoplay();
     });
+}
+
+function initializeServiceStories() {
+    const storiesRoot = document.querySelector('[data-service-stories]');
+
+    if (!storiesRoot) {
+        return;
+    }
+
+    const steps = Array.from(storiesRoot.querySelectorAll('[data-service-step]'));
+
+    if (!steps.length) {
+        return;
+    }
+
+    const activateStory = (storyId) => {
+        if (!storyId) {
+            return;
+        }
+
+        steps.forEach((step) => {
+            step.classList.toggle('is-active', step.dataset.serviceStep === storyId);
+        });
+    };
+
+    let ticking = false;
+
+    const updateParallax = () => {
+        const isDesktop = window.innerWidth >= 1024;
+
+        steps.forEach((step) => {
+            const rect = step.getBoundingClientRect();
+            const media = step.querySelector('.service-story-gallery');
+
+            if (!media) {
+                return;
+            }
+
+            if (!isDesktop) {
+                media.style.setProperty('--service-card-offset', '0px');
+                return;
+            }
+
+            const viewportCenter = window.innerHeight * 0.5;
+            const cardCenter = rect.top + rect.height / 2;
+            const offset = Math.max(-24, Math.min(24, (viewportCenter - cardCenter) * 0.06));
+            media.style.setProperty('--service-card-offset', `${offset}px`);
+        });
+
+        ticking = false;
+    };
+
+    const requestParallax = () => {
+        if (ticking) {
+            return;
+        }
+
+        ticking = true;
+        window.requestAnimationFrame(updateParallax);
+    };
+
+    const refreshStories = () => {
+        const firstVisibleStep = steps.find((step) => {
+            const rect = step.getBoundingClientRect();
+            return rect.top < window.innerHeight * 0.62 && rect.bottom > window.innerHeight * 0.22;
+        });
+
+        activateStory(firstVisibleStep?.dataset.serviceStep || steps[0].dataset.serviceStep);
+        requestParallax();
+    };
+
+    if (storiesRoot.dataset.serviceStoriesReady === 'true') {
+        refreshStories();
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        const visibleEntries = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((entryA, entryB) => entryB.intersectionRatio - entryA.intersectionRatio);
+
+        if (visibleEntries.length) {
+            activateStory(visibleEntries[0].target.dataset.serviceStep);
+        }
+    }, {
+        threshold: [0.3, 0.45, 0.6, 0.75],
+        rootMargin: '-12% 0px -28% 0px'
+    });
+
+    steps.forEach((step) => observer.observe(step));
+
+    window.addEventListener('scroll', requestParallax, { passive: true });
+    window.addEventListener('resize', refreshStories);
+
+    storiesRoot.dataset.serviceStoriesReady = 'true';
+    refreshStories();
 }
 
 // Función para mostrar notificaciones

@@ -1,29 +1,34 @@
 <section class="hero flex-1 flex items-center relative overflow-hidden py-10 sm:py-14 md:py-20" id="inicio">
   <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(142,169,202,0.18),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(111,144,190,0.24),transparent_34%)]"></div>
-  <div class="absolute w-56 sm:w-80 h-56 sm:h-80 bg-white rounded-full -top-16 -right-16 opacity-10 animate-float-1"></div>
-  <div class="absolute w-44 sm:w-64 h-44 sm:h-64 bg-white rounded-full left-1/2 -bottom-20 opacity-10 animate-float-2"></div>
-  <div class="absolute hidden sm:block w-72 h-72 bg-white rounded-full bottom-1/4 right-1/12 opacity-10 animate-float-3"></div>
-  <div class="absolute hidden sm:block bottom-40 right-20 w-32 h-32 border border-white opacity-10 rounded-full animate-pulse"></div>
-  <div class="absolute hidden sm:block top-1/3 right-1/4 w-10 h-10 bg-white opacity-20 rounded-full animate-bounce-custom"></div>
+  <div class="hero-snow" aria-hidden="true">
+    <span class="snowflake" style="--left: 8%; --size: 0.88rem; --duration: 17s; --delay: -5s; --drift: 14px; --opacity: 0.22; --scale: 0.84; --blur: 0.15px;"><span class="snowflake-shape"></span></span>
+    <span class="snowflake" style="--left: 18%; --size: 1rem; --duration: 21s; --delay: -13s; --drift: 18px; --opacity: 0.28; --scale: 0.92; --blur: 0px;"><span class="snowflake-shape"></span></span>
+    <span class="snowflake" style="--left: 31%; --size: 0.82rem; --duration: 15s; --delay: -8s; --drift: 12px; --opacity: 0.18; --scale: 0.78; --blur: 0.25px;"><span class="snowflake-shape"></span></span>
+    <span class="snowflake" style="--left: 44%; --size: 1.18rem; --duration: 22s; --delay: -2s; --drift: 20px; --opacity: 0.3; --scale: 0.98; --blur: 0px;"><span class="snowflake-shape"></span></span>
+    <span class="snowflake" style="--left: 58%; --size: 0.9rem; --duration: 18s; --delay: -10s; --drift: 16px; --opacity: 0.2; --scale: 0.86; --blur: 0.2px;"><span class="snowflake-shape"></span></span>
+    <span class="snowflake" style="--left: 71%; --size: 1.08rem; --duration: 24s; --delay: -16s; --drift: 22px; --opacity: 0.34; --scale: 1; --blur: 0px;"><span class="snowflake-shape"></span></span>
+    <span class="snowflake hidden sm:block" style="--left: 84%; --size: 0.84rem; --duration: 16s; --delay: -6s; --drift: 14px; --opacity: 0.19; --scale: 0.8; --blur: 0.3px;"><span class="snowflake-shape"></span></span>
+    <span class="snowflake hidden sm:block" style="--left: 92%; --size: 1.14rem; --duration: 20s; --delay: -11s; --drift: 18px; --opacity: 0.26; --scale: 0.94; --blur: 0.05px;"><span class="snowflake-shape"></span></span>
+  </div>
 
   <div class="container mx-auto px-4 sm:px-5 relative z-10">
-    <div class="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-8 sm:gap-10 lg:gap-16 items-center">
-      <div class="hero-content max-w-3xl animate-slideUp text-center lg:text-left">
+    <div class="max-w-4xl mx-auto">
+      <div class="hero-content animate-slideUp text-center">
         <div class="mb-6 sm:mb-8 animate-scaleIn" style="animation-delay: 0.2s;">
-          <span class="inline-block max-w-full px-4 sm:px-6 py-2 bg-white bg-opacity-15 text-white rounded-full text-xs sm:text-sm font-semibold backdrop-blur-sm border border-white border-opacity-30 shadow-lg shadow-primary-800/20">
+          <span class="hero-eyebrow inline-block max-w-full px-4 sm:px-6 py-2 bg-white bg-opacity-15 text-white rounded-full text-xs sm:text-sm font-semibold backdrop-blur-sm border border-white border-opacity-30 shadow-lg shadow-primary-800/20">
             Ingenieria HVAC con identidad tecnica y ejecucion confiable
           </span>
         </div>
 
-        <h2 class="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-black text-white mb-5 sm:mb-6 leading-[1.05] sm:leading-tight animate-slideUp" style="animation-delay: 0.3s;">
+        <h2 class="hero-title text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-black text-white mb-5 sm:mb-6 leading-[1.05] sm:leading-tight animate-slideUp" style="animation-delay: 0.3s;">
           Soluciones HVAC con una presencia de marca <span class="hero-highlight">solida y profesional</span>
         </h2>
 
-        <p class="text-base sm:text-lg md:text-2xl text-white mb-8 sm:mb-10 opacity-95 leading-relaxed animate-slideUp max-w-2xl lg:max-w-none mx-auto lg:mx-0" style="animation-delay: 0.4s;">
-          Diseno, instalacion y mantenimiento de sistemas de climatizacion para sector institucional, comercial e industrial, con enfoque en cumplimiento tecnico, continuidad operativa y confianza de largo plazo.
+        <p class="hero-description text-base sm:text-lg md:text-2xl text-white mb-8 sm:mb-10 opacity-95 leading-relaxed animate-slideUp max-w-3xl mx-auto" style="animation-delay: 0.4s;">
+          Diseño, instalación y mantenimiento de sistemas de climatización para sector institucional, comercial e industrial, con enfoque en cumplimiento técnico, continuidad operativa y confianza de largo plazo.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center lg:justify-start items-stretch sm:items-center animate-slideUp" style="animation-delay: 0.5s;">
+        <div class="hero-actions flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-stretch sm:items-center animate-slideUp" style="animation-delay: 0.5s;">
           <a href="#contacto" data-open-tab="contacto" class="btn-primary btn-primary-light inline-flex w-full sm:w-auto justify-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group btn-ripple relative">
             <span class="flex items-center justify-center gap-2">
               Solicitar cotizacion
@@ -39,38 +44,18 @@
           </a>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mt-10 sm:mt-12 animate-slideUp" style="animation-delay: 0.6s;">
-          <div class="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md px-4 sm:px-5 py-4 text-white">
+        <div class="hero-metrics-grid grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mt-10 sm:mt-12 animate-slideUp" style="animation-delay: 0.6s;">
+          <div class="hero-metric-card rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md px-4 sm:px-5 py-4 text-white">
             <p class="text-xl sm:text-2xl font-black">100+</p>
             <p class="text-[11px] sm:text-sm uppercase tracking-[0.14em] sm:tracking-[0.18em] text-white/75">Proyectos</p>
           </div>
-          <div class="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md px-4 sm:px-5 py-4 text-white">
+          <div class="hero-metric-card rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md px-4 sm:px-5 py-4 text-white">
             <p class="text-xl sm:text-2xl font-black">15+</p>
-            <p class="text-[11px] sm:text-sm uppercase tracking-[0.14em] sm:tracking-[0.18em] text-white/75">Anios de experiencia</p>
+            <p class="text-[11px] sm:text-sm uppercase tracking-[0.14em] sm:tracking-[0.18em] text-white/75">Años de experiencia</p>
           </div>
-          <div class="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md px-4 sm:px-5 py-4 text-white col-span-2 sm:col-span-1">
+          <div class="hero-metric-card rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md px-4 sm:px-5 py-4 text-white col-span-2 sm:col-span-1">
             <p class="text-xl sm:text-2xl font-black">HVAC</p>
             <p class="text-[11px] sm:text-sm uppercase tracking-[0.14em] sm:tracking-[0.18em] text-white/75">Sector institucional e industrial</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="relative animate-slideInRight w-full max-w-xl mx-auto" style="animation-delay: 0.35s;">
-        <div class="rounded-[1.5rem] sm:rounded-[2rem] border border-white/15 bg-white/10 backdrop-blur-md shadow-2xl shadow-primary-800/20 p-3 sm:p-4 md:p-6">
-          <div class="rounded-[1.3rem] sm:rounded-[1.75rem] bg-dark/95 p-4 sm:p-6 md:p-8 border border-white/10 shadow-[0_24px_60px_rgba(10,22,40,0.35)]">
-            <img src="images/LOGO ALESPI BLANCO.png" alt="Logo ALESPI Solutions" class="w-full max-w-lg mx-auto object-contain">
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5">
-            <div class="rounded-2xl bg-white/95 px-5 py-4 text-left shadow-lg">
-              <p class="text-xs uppercase tracking-[0.22em] text-primary-300 font-bold mb-2">Capacidad tecnica</p>
-              <p class="text-primary-500 text-lg font-black">Diseno e ingenieria HVAC</p>
-              <p class="text-gray-600 text-sm">Soluciones desarrolladas con criterio tecnico para instalaciones institucionales, comerciales e industriales.</p>
-            </div>
-            <div class="rounded-2xl bg-white/95 px-5 py-4 text-left shadow-lg">
-              <p class="text-xs uppercase tracking-[0.22em] text-primary-300 font-bold mb-2">Ejecucion</p>
-              <p class="text-dark text-lg font-black">Instalacion, mantenimiento y respuesta</p>
-              <p class="text-gray-600 text-sm">Acompanamiento operativo para conservar desempeno, continuidad y confiabilidad en cada sistema.</p>
-            </div>
           </div>
         </div>
       </div>
