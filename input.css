@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Estilos personalizados avanzados */
+/*
+  Capa de componentes reutilizables.
+  Aquí viven las abstracciones visuales principales del sitio: botones, tarjetas, layouts narrativos y variantes de navegación.
+*/
 @layer components {
-  /* Botones Mejorados */
+  /* Botones principales utilizados en CTAs, formularios y enlaces de conversión. */
   .btn-primary {
     @apply inline-block px-10 py-3 rounded-lg font-semibold transition-all duration-300 cursor-pointer border-2 border-transparent relative overflow-hidden;
   }
@@ -25,6 +28,7 @@
     @apply bg-gradient-to-r from-primary-500 to-secondary-400 text-white hover:shadow-2xl hover:-translate-y-1 hover:scale-105 transform;
   }
 
+  /* Variante orientada a WhatsApp para destacar el canal de contacto inmediato. */
   .btn-whatsapp {
     @apply text-white border-transparent hover:-translate-y-1 hover:scale-[1.02] transform;
     background: linear-gradient(135deg, #2d6a4f 0%, #3c8c67 100%);
@@ -35,7 +39,7 @@
     box-shadow: 0 22px 40px rgba(45, 106, 79, 0.3);
   }
 
-  /* Títulos de secciones mejorados */
+  /* Encabezado estándar compartido por las distintas secciones de contenido. */
   .section-title {
     @apply text-center text-4xl md:text-5xl font-bold text-dark mb-4 relative;
   }
@@ -44,7 +48,7 @@
     @apply content-[''] absolute bottom-[-20px] left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary-500 via-secondary-400 to-primary-500 rounded-full;
   }
 
-  /* Tarjetas mejoradas */
+  /* Tratamientos visuales genéricos para tarjetas de contenido y estados hover. */
   .card-hover {
     @apply transition-all duration-500 hover:-translate-y-4 hover:shadow-2xl;
   }
@@ -61,6 +65,7 @@
     transform: translateX(0);
   }
 
+  /* Storyboard de servicios: layout, capas visuales y estados activos controlados por scroll. */
   .service-storyboard {
     display: block;
     margin-top: 5rem;

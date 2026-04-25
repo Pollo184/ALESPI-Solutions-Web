@@ -9,10 +9,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="bg-white min-h-screen flex flex-col">
+    <!-- La barra de navegación se carga como parcial para mantener el shell principal desacoplado del contenido. -->
     <div data-include="src/navbar.html"></div>
 
+    <!-- Este contenedor agrupa las vistas principales del sitio y habilita la navegación por pestañas sin recargar la página. -->
     <div id="tabs-container" class="flex-1 flex flex-col">
       <div data-tab-content="inicio" class="tab-content tab-content-fill tab-content-hero active">
+        <!-- La pestaña de inicio combina el hero y la sección institucional de valores. -->
         <div data-include="src/hero.html"></div>
         <div data-include="src/valores.html"></div>
       </div>
@@ -34,8 +37,11 @@
         <div data-include="src/contacto.html"></div>
       </div>
     </div>
+
+    <!-- El pie de página permanece fuera del contenedor de tabs para mostrarse de forma consistente en toda la experiencia. -->
     <div data-include="src/footer.html"></div>
 
+    <!-- La lógica central carga los parciales y activa todas las interacciones de la interfaz. -->
     <script src="script.js"></script>
 </body>
 </html>

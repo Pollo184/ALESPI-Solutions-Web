@@ -1,6 +1,8 @@
+<!-- Navegación principal: define la identidad de marca y los disparadores que cambian entre pestañas del sitio. -->
 <nav class="navbar sticky top-0 z-50 bg-white shadow-lg border-b-2 border-primary-500/20 hover:shadow-xl transition-all duration-300">
   <div class="container mx-auto px-5 py-4">
     <div class="flex justify-between items-center md:mb-4">
+      <!-- Bloque de marca con nombre comercial y razón social. -->
       <div class="navbar-brand animate-slideInLeft">
         <div class="flex flex-col">
           <h1 class="text-2xl md:text-3xl font-black tracking-tight text-primary-500 hover:scale-105 transition-transform duration-300 cursor-pointer">
@@ -17,6 +19,7 @@
           <img src="images/ALESPI BLANCO sin letras.png" alt="Isotipo ALESPI Solutions" class="navbar-logo-img">
         </div>
 
+        <!-- El botón hamburguesa solo se usa en móvil y expande la navegación verticalmente. -->
         <button type="button" aria-label="Abrir menu" class="hamburger md:hidden flex flex-col cursor-pointer space-y-1.5 hover:scale-110 transition-transform duration-300">
           <span class="w-6 h-0.5 bg-primary-500 transition-all duration-300 hover:bg-secondary-400"></span>
           <span class="w-6 h-0.5 bg-primary-500 transition-all duration-300 hover:bg-secondary-400"></span>
@@ -25,6 +28,7 @@
       </div>
     </div>
 
+    <!-- Cada botón expone el atributo data-tab, que el script usa para mostrar la vista correspondiente. -->
     <div class="nav-tabs flex gap-2 md:gap-8 overflow-x-auto md:overflow-visible pb-0 md:pb-4">
       <button data-tab="inicio" class="tab-btn active px-4 md:px-6 py-2 rounded-lg font-semibold text-sm md:text-base text-gray-800 hover:text-primary-500 transition-all duration-300 whitespace-nowrap border-b-2 border-transparent hover:border-primary-500 tab-active" style="animation: slideUp 0.5s ease-out; animation-delay: 0s;">
         Inicio

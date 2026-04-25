@@ -1,3 +1,4 @@
+// Punto de entrada de la interfaz: primero carga el HTML modular y después activa cada comportamiento dependiente del DOM.
 document.addEventListener('DOMContentLoaded', async function() {
     await loadPartials();
     initializeTabs();
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     initializeNavbarShadow();
 });
 
+// Inserta en la página cada parcial declarado con data-include para mantener el index.html como un shell liviano.
 async function loadPartials() {
     const partialTargets = document.querySelectorAll('[data-include]');
 
@@ -32,6 +34,7 @@ async function loadPartials() {
     }));
 }
 
+// Reinicia clases de animación cuando una pestaña vuelve a mostrarse para que los efectos se reproduzcan otra vez.
 function restartAnimations(container) {
     const animatedElements = container.querySelectorAll('[class*="animate-"]');
 
@@ -48,6 +51,7 @@ function restartAnimations(container) {
     });
 }
 
+// Activa una pestaña de contenido, sincroniza el estado visual del menú y rehidrata efectos dependientes de la vista activa.
 function activateTab(tabName) {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
@@ -68,6 +72,7 @@ function activateTab(tabName) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// Vincula tanto los botones del navbar como los CTA internos que abren una pestaña específica.
 function initializeTabs() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabLinks = document.querySelectorAll('[data-open-tab]');
@@ -89,6 +94,7 @@ function initializeTabs() {
     });
 }
 
+// Controla la expansión del menú en móvil reutilizando una clase sobre el elemento nav.
 function initializeHamburger() {
     const hamburger = document.querySelector('.hamburger');
 
@@ -102,6 +108,7 @@ function initializeHamburger() {
     });
 }
 
+// Valida campos obligatorios y formato de correo antes de simular el envío del formulario de contacto.
 function initializeContactForm() {
     const formularioContacto = document.getElementById('formularioContacto');
 
@@ -135,6 +142,7 @@ function initializeContactForm() {
     });
 }
 
+// Inicializa cualquier carrusel declarado con atributos data-carousel y encapsula estado por instancia.
 function initializeCarousels() {
     const carousels = document.querySelectorAll('[data-carousel]');
 
@@ -197,6 +205,7 @@ function initializeCarousels() {
     });
 }
 
+// Gestiona la activación de tarjetas de servicios según el scroll y aplica un desplazamiento sutil en sus imágenes.
 function initializeServiceStories() {
     const storiesRoot = document.querySelector('[data-service-stories]');
 
@@ -293,7 +302,7 @@ function initializeServiceStories() {
     refreshStories();
 }
 
-// Función para mostrar notificaciones
+// Construye una notificación temporal y registra sus estilos una sola vez para no duplicar reglas en el documento.
 function mostrarNotificacion(mensaje, tipo = 'info') {
     const notificacion = document.createElement('div');
     notificacion.className = `notificacion notificacion-${tipo}`;
@@ -363,7 +372,7 @@ function mostrarNotificacion(mensaje, tipo = 'info') {
     
     document.body.appendChild(notificacion);
     
-    // Auto-eliminar notificación después de 5 segundos
+    // La salida se difiere para que la animación de cierre se complete antes de retirar el nodo del DOM.
     setTimeout(() => {
         notificacion.classList.add('saliendo');
         setTimeout(() => {
@@ -372,6 +381,7 @@ function mostrarNotificacion(mensaje, tipo = 'info') {
     }, 5000);
 }
 
+// Suaviza el desplazamiento de anclas internas sin interferir con los enlaces que cambian de pestaña.
 function initializeAnchorScroll() {
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener('click', function(e) {
@@ -393,6 +403,7 @@ function initializeAnchorScroll() {
     });
 }
 
+// Observa los contadores numéricos para iniciar su animación solo cuando entran en el viewport.
 function initializeStatsObserver() {
     const observerOptions = {
         threshold: 0.5
@@ -412,10 +423,11 @@ function initializeStatsObserver() {
     });
 }
 
+// Anima la cuenta ascendente hasta alcanzar el valor final renderizado en la tarjeta.
 function animarNumero(element) {
     const numero = element.textContent;
     const valorNumerico = parseInt(numero) || 0;
-    const duracion = 2000; // 2 segundos
+    const duracion = 2000;
     const incremento = valorNumerico / (duracion / 50);
     
     let valorActual = 0;
@@ -430,6 +442,7 @@ function animarNumero(element) {
     }, 50);
 }
 
+// Aplica una revelación progresiva a tarjetas de valor y servicio cuando aparecen en pantalla.
 function initializeCardObserver() {
     const animarElementos = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -451,6 +464,7 @@ function initializeCardObserver() {
     });
 }
 
+// Ajusta la sombra del navbar según el desplazamiento para reforzar jerarquía visual en scroll.
 function initializeNavbarShadow() {
     const navbar = document.querySelector('.navbar');
 

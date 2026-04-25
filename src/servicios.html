@@ -1,10 +1,13 @@
+<!-- Sección de servicios: utiliza un storyboard vertical para presentar segmentos de mercado y capacidades. -->
 <section class="servicios py-20 md:py-32 bg-[linear-gradient(180deg,#eef4fb_0%,#f8fbff_44%,#ffffff_100%)] overflow-hidden" id="servicios">
   <div class="container mx-auto px-5">
     <h2 class="section-title mt-0 animate-slideUp">Nuestros Servicios</h2>
     
 
+    <!-- El contenedor data-service-stories permite que la lógica active la tarjeta visible y aplique el efecto parallax. -->
     <div class="service-storyboard" data-service-stories>
       <div class="service-story-list">
+        <!-- Cada artículo representa una narrativa de servicio independiente y se activa según el scroll. -->
         <article class="service-story-step service-story-step-enter is-active" data-service-step="industrial">
           <div class="service-story-card service-story-card-grid">
             <div class="service-story-gallery">
@@ -33,6 +36,7 @@
           </div>
         </article>
 
+        <!-- El resto de tarjetas reutiliza la misma estructura para facilitar mantenimiento y escalabilidad. -->
         <article class="service-story-step" data-service-step="privado">
           <div class="service-story-card service-story-card-grid">
             <div class="service-story-gallery">
