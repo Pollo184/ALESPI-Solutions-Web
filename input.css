@@ -1041,6 +1041,117 @@
   }
 }
 
+/* ============================================================
+   EXPERTIZ — Galería con fade, tarjeta emparejada y videos
+   ============================================================ */
+
+/* --- Galería con fade automático --- */
+.expertiz-gallery {
+  position: relative;
+  border-radius: 1.75rem;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(26, 61, 115, 0.13);
+  height: 560px;
+}
+
+.expertiz-gallery-inner {
+  position: relative;
+  width: 100%;
+  height: 560px;
+}
+
+.expertiz-gallery-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  border-radius: 1.75rem;
+}
+
+.expertiz-gallery-slide.active {
+  opacity: 1;
+  position: relative;
+}
+
+.expertiz-gallery-dots {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.expertiz-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.expertiz-dot.active {
+  background: white;
+  transform: scale(1.3);
+}
+
+/* --- Tarjeta de sistemas: altura completa para emparejar con la galería --- */
+.expertiz-summary-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 560px;
+}
+
+.expertiz-summary-card ul li {
+  position: relative;
+  padding-left: 1.1rem;
+}
+
+.expertiz-summary-card ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #6f90be;
+}
+
+/* --- Tarjetas de video --- */
+.expertiz-video-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.expertiz-video-player {
+  display: block;
+  width: 100%;
+  max-height: 400px;
+  min-height: 320px;
+  object-fit: cover;
+  background: #0a1628;
+}
+
+.expertiz-video-label {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6f90be;
+  margin-bottom: 0.5rem;
+}
+
+
 .navbar-logo-wrap {
   display: flex;
   align-items: center;
@@ -1328,5 +1439,29 @@
 
   .portfolio-carousel-media {
     aspect-ratio: 1 / 1;
+  }
+}
+
+/* --- Expertiz responsive --- */
+@media (max-width: 1023px) {
+  .expertiz-gallery,
+  .expertiz-gallery-inner {
+    height: 420px;
+  }
+
+  .expertiz-summary-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .expertiz-gallery,
+  .expertiz-gallery-inner {
+    height: 300px;
+  }
+
+  .expertiz-video-player {
+    max-height: 240px;
+    min-height: 180px;
   }
 }

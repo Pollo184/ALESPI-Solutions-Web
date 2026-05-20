@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     initializeStatsObserver();
     initializeCardObserver();
     initializeNavbarShadow();
+    initializeExpertizGallery();
+    initializeVideoThumbnails();
 });
 
 // Inserta en la página cada parcial declarado con data-include para mantener el index.html como un shell liviano.
@@ -69,6 +71,10 @@ function activateTab(tabName) {
     activeContent.classList.remove('hidden');
     restartAnimations(activeContent);
     initializeServiceStories();
+    if (tabName === 'expertiz') {
+        initializeExpertizGallery();
+        initializeVideoThumbnails();
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -477,6 +483,71 @@ function initializeNavbarShadow() {
             navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
         } else {
             navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+        }
+    });
+}
+
+
+// Inicializa la galería de expertiz con transiciones fade automáticas cada 3 segundos.
+function initializeExpertizGallery() {
+    const slides = document.querySelectorAll('.expertiz-gallery-slide');
+    const dotsContainer = document.getElementById('expertizDots');
+
+    if (!slides.length || !dotsContainer) return;
+
+    // Evitar doble inicialización
+    if (dotsContainer.dataset.initialized === 'true') return;
+    dotsContainer.dataset.initialized = 'true';
+
+    let current = 0;
+    let timer;
+
+    // Limpiar dots previos si los hay
+    dotsContainer.innerHTML = '';
+
+    slides.forEach(function (_, i) {
+        const dot = document.createElement('button');
+        dot.className = 'expertiz-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Imagen ' + (i + 1));
+        dot.addEventListener('click', function () { goTo(i); resetTimer(); });
+        dotsContainer.appendChild(dot);
+    });
+
+    function goTo(index) {
+        slides[current].classList.remove('active');
+        dotsContainer.children[current].classList.remove('active');
+        current = (index + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dotsContainer.children[current].classList.add('active');
+    }
+
+    function resetTimer() {
+        clearInterval(timer);
+        timer = setInterval(function () { goTo(current + 1); }, 3000);
+    }
+
+    resetTimer();
+}
+
+// Muestra el primer fotograma real de cada video en lugar de pantalla negra.
+function initializeVideoThumbnails() {
+    ['vidPlayer1', 'vidPlayer2'].forEach(function (id) {
+        const video = document.getElementById(id);
+        if (!video) return;
+
+        function seekToFrame() {
+            video.currentTime = 0.5;
+        }
+
+        video.addEventListener('seeked', function handler() {
+            video.pause();
+            video.removeEventListener('seeked', handler);
+        });
+
+        if (video.readyState >= 2) {
+            seekToFrame();
+        } else {
+            video.addEventListener('loadeddata', seekToFrame, { once: true });
         }
     });
 }
