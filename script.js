@@ -88,6 +88,8 @@ function initializeTabs() {
         button.addEventListener('click', function() {
             activateTab(this.getAttribute('data-tab'));
             navElement?.classList.remove('expanded');
+            document.querySelector('.hamburger')?.setAttribute('aria-expanded', 'false');
+            document.querySelector('.hamburger')?.setAttribute('aria-label', 'Abrir menú');
         });
     });
 
@@ -96,6 +98,8 @@ function initializeTabs() {
             event.preventDefault();
             activateTab(this.getAttribute('data-open-tab'));
             navElement?.classList.remove('expanded');
+            document.querySelector('.hamburger')?.setAttribute('aria-expanded', 'false');
+            document.querySelector('.hamburger')?.setAttribute('aria-label', 'Abrir menú');
         });
     });
 }
@@ -103,18 +107,21 @@ function initializeTabs() {
 // Controla la expansión del menú en móvil reutilizando una clase sobre el elemento nav.
 function initializeHamburger() {
     const hamburger = document.querySelector('.hamburger');
+    const navbar = document.querySelector('nav');
 
-    if (!hamburger) {
+    if (!hamburger || !navbar) {
         return;
     }
 
     hamburger.addEventListener('click', () => {
-        const tabsContainer = document.querySelector('nav');
-        tabsContainer.classList.toggle('expanded');
+        navbar.classList.toggle('expanded');
+        const isExpanded = navbar.classList.contains('expanded');
+        hamburger.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        hamburger.setAttribute('aria-label', isExpanded ? 'Cerrar menú' : 'Abrir menú');
     });
 }
 
-// Valida campos obligatorios y formato de correo antes de simular el envío del formulario de contacto.
+// Valida campos obligatorios y formato de correo antes de enviar el formulario al backend.
 function initializeContactForm() {
     const formularioContacto = document.getElementById('formularioContacto');
 
@@ -122,7 +129,7 @@ function initializeContactForm() {
         return;
     }
 
-    formularioContacto.addEventListener('submit', (e) => {
+    formularioContacto.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const nombre = document.getElementById('nombre').value.trim();
@@ -136,15 +143,61 @@ function initializeContactForm() {
             return;
         }
 
-        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!regexEmail.test(email)) {
-            mostrarNotificacion('Por favor, ingresa un email valido.', 'error');
+        const regexNombre = /^[^\d]+$/;
+        if (!regexNombre.test(nombre)) {
+            mostrarNotificacion('El nombre no puede contener números.', 'error');
             return;
         }
 
-        console.log('Formulario enviado:', { nombre, email, empresa, asunto, mensaje });
-        mostrarNotificacion('Mensaje enviado exitosamente. Te contactaremos pronto.', 'success');
-        formularioContacto.reset();
+        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!regexEmail.test(email)) {
+            mostrarNotificacion('Por favor, ingresa un email válido.', 'error');
+            return;
+        }
+
+        const payload = { nombre, email, empresa, asunto, mensaje };
+        const submitButton = formularioContacto.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton ? submitButton.textContent : null;
+
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Enviando...';
+        }
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const responseText = await response.text();
+            let result = null;
+
+            try {
+                result = responseText ? JSON.parse(responseText) : null;
+            } catch (parseError) {
+                result = null;
+            }
+
+            if (!response.ok) {
+                const errorMessage = result?.error || responseText || response.statusText || 'No se pudo enviar el formulario.';
+                throw new Error(errorMessage);
+            }
+
+            mostrarNotificacion('¡Mensaje recibido! Pronto recibirás una confirmación en tu correo.', 'success');
+            formularioContacto.reset();
+        } catch (error) {
+            console.error(error);
+            mostrarNotificacion(error.message || 'Ocurrió un error al enviar el formulario.', 'error');
+        } finally {
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+            }
+        }
     });
 }
 
