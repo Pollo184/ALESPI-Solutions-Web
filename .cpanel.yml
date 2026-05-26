@@ -1,5 +1,0 @@
-deployment:
-  tasks:
-    - /usr/local/bin/npm install --include=dev
-    - /usr/local/bin/npm run build
-  restart: true
