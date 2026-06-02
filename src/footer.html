@@ -8,10 +8,56 @@
 
   <div class="container mx-auto px-5 relative z-10">
     <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-      <p class="text-center md:text-left hover:text-primary-400 transition-colors duration-300 animate-fadeIn">&copy; 2026 ALESPI Solutions S.A. de C.V. Todos los derechos reservados.</p>
+      <div class="flex flex-col items-center md:items-start gap-2 text-center md:text-left">
+        <p class="hover:text-primary-400 transition-colors duration-300 animate-fadeIn">&copy; 2026 ALESPI Solutions S.A. de C.V. Todos los derechos reservados.</p>
+        <button type="button" data-open-privacy class="text-sm text-gray-300 underline hover:text-primary-300 transition-colors duration-300">Aviso de privacidad</button>
+      </div>
       <div class="footer-links flex flex-col md:flex-row gap-6">
-        <p class="text-gray-300 text-center italic hover:text-primary-300 transition-colors duration-300 animate-fadeIn">"Donde el confort se convierte en experiencia"</p>
+        <p class="text-xl md:text-2xl font-semibold text-gray-300 text-center italic hover:text-primary-300 transition-colors duration-300 animate-fadeIn">"Donde el confort se convierte en experiencia"</p>
       </div>
     </div>
   </div>
 </footer>
+
+<div id="privacy-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-950/75 p-4">
+  <div class="w-full max-w-3xl rounded-[2rem] bg-white text-slate-900 shadow-2xl ring-1 ring-slate-200 overflow-hidden">
+    <div class="flex flex-col gap-4 border-b border-slate-200 bg-slate-50 p-6 sm:flex-row sm:items-center sm:justify-between">
+      <h3 class="text-2xl font-bold">Aviso de Privacidad</h3>
+      <button type="button" data-close-privacy class="text-slate-500 hover:text-slate-900 text-3xl leading-none" aria-label="Cerrar aviso de privacidad">×</button>
+    </div>
+    <div class="space-y-4 p-6 text-slate-700 leading-relaxed">
+      <p>En ALESPI Solutions, nos comprometemos a proteger la privacidad y los datos personales de nuestros usuarios.</p>
+      <p>La información recopilada a través de formularios de contacto, correos electrónicos o cualquier medio dentro de este sitio web será utilizada únicamente para fines de comunicación, atención a clientes, cotizaciones y mejora de nuestros servicios.</p>
+      <div>
+        <p class="font-semibold">Información que podemos recopilar</p>
+        <ul class="list-disc list-inside space-y-1 text-slate-600 mt-2">
+          <li>Nombre</li>
+          <li>Correo electrónico</li>
+          <li>Número telefónico</li>
+          <li>Información relacionada con solicitudes o proyectos</li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-semibold">Uso de cookies</p>
+        <p>Este sitio puede utilizar cookies y tecnologías similares para mejorar la experiencia del usuario, analizar el tráfico y optimizar el funcionamiento del sitio web. Las cookies no recopilan información sensible y pueden deshabilitarse desde la configuración de su navegador.</p>
+      </div>
+      <div>
+        <p class="font-semibold">Protección de datos</p>
+        <p>ALESPI Solutions implementa medidas de seguridad razonables para proteger la información de los usuarios contra accesos no autorizados, alteraciones o divulgación indebida.</p>
+      </div>
+      <div>
+        <p class="font-semibold">Compartición de información</p>
+        <p>No vendemos ni compartimos información personal con terceros, salvo cuando sea necesario para proporcionar servicios solicitados o por requerimiento legal.</p>
+      </div>
+      <div>
+        <p class="font-semibold">Contacto</p>
+        <p>Si tiene dudas sobre este aviso de privacidad, puede contactarnos mediante el correo electrónico de contacto disponible en este sitio web.</p>
+      </div>
+      <p class="text-sm text-slate-500">Última actualización: Junio 2026</p>
+    </div>
+    <div class="flex justify-end border-t border-slate-200 bg-slate-50 p-5">
+      <button type="button" data-close-privacy class="rounded-full bg-primary-500 px-5 py-3 text-white hover:bg-primary-600 transition">Cerrar</button>
+    </div>
+  </div>
+</div>
+

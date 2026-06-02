@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     initializeCarousels();
     initializeServiceStories();
     initializeContactForm();
+    initializePrivacyModal();
     initializeAnchorScroll();
     initializeStatsObserver();
     initializeCardObserver();
@@ -197,6 +198,53 @@ function initializeContactForm() {
                 submitButton.disabled = false;
                 submitButton.textContent = originalButtonText;
             }
+        }
+    });
+}
+
+function initializePrivacyModal() {
+    const modal = document.getElementById('privacy-modal');
+    if (!modal) {
+        return;
+    }
+
+    const showModal = () => {
+        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    };
+
+    const hideModal = () => {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    };
+
+    document.body.addEventListener('click', (event) => {
+        const openButton = event.target.closest('[data-open-privacy]');
+        if (openButton) {
+            event.preventDefault();
+            showModal();
+            return;
+        }
+
+        const closeButton = event.target.closest('[data-close-privacy]');
+        if (closeButton) {
+            event.preventDefault();
+            hideModal();
+            return;
+        }
+    });
+
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            hideModal();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+            hideModal();
         }
     });
 }
