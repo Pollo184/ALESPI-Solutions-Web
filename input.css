@@ -199,6 +199,34 @@
     color: white;
   }
 
+  /* Ajustes para el modal de aviso de privacidad */
+  @media (max-width: 767px) {
+    #privacy-modal {
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    #privacy-modal > .privacy-modal-panel {
+      width: calc(100vw - 1.5rem);
+      max-width: calc(100vw - 1.5rem);
+      height: calc(100vh - 2rem);
+      max-height: calc(100vh - 2rem);
+      border-radius: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #privacy-modal .privacy-modal-body {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+  }
+
   .service-story-caption-box p {
     max-width: 26rem;
     font-size: 0.88rem;
