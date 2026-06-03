@@ -5,7 +5,8 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const RESEND_API_KEY = process.env.RESEND_API_KEY?.trim();
-const RESEND_FROM = process.env.RESEND_FROM?.trim() || 'contacto@alespi.mx';
+const RESEND_FROM = process.env.RESEND_FROM?.trim() || 'noreply@notify.alespi.mx';
+const RESEND_REPLY_TO = process.env.RESEND_REPLY_TO?.trim();
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const nameRegex = /^[^\d]+$/;
@@ -92,31 +93,120 @@ app.post('/api/contact', async (req, res) => {
 </html>`;
 
   try {
+    const payload = {
+      from: `ALESPI Solutions <${fromAddress}>`,
+      to: [normalizedEmail],
+      subject,
+      text,
+      html
+    };
+
+    // Añadir Reply-To si está configurado
+    if (RESEND_REPLY_TO) {
+      payload.headers = { 'Reply-To': RESEND_REPLY_TO };
+    }
+
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${RESEND_API_KEY}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        from: `ALESPI Solutions <${fromAddress}>`,
-        to: [normalizedEmail],
-        subject,
-        text,
-        html
-      })
+      body: JSON.stringify(payload)
     });
 
     const responseText = await response.text();
+    let responseBody;
+    try {
+      responseBody = responseText ? JSON.parse(responseText) : null;
+    } catch (err) {
+      responseBody = responseText;
+    }
+
     if (!response.ok) {
-      console.error('Resend API error:', responseText);
+      console.error('Resend API error:', responseBody);
       return res.status(502).json({ error: 'No se pudo enviar el correo de confirmación. Intenta de nuevo más tarde.' });
     }
+
+    // Log de éxito para depuración
+    console.log('Resend API success:', responseBody);
 
     return res.status(200).json({ success: true, message: 'Correo de confirmación enviado.' });
   } catch (error) {
     console.error('Resend error:', error);
     return res.status(500).json({ error: 'Error al enviar el correo de confirmación. Intenta de nuevo más tarde.' });
+  }
+});
+
+// Webhook para recibir eventos de Resend (email.received)
+app.post('/api/webhook', async (req, res) => {
+  const event = req.body;
+
+  if (!event || event.type !== 'email.received') {
+    return res.status(200).json({ ok: true });
+  }
+
+  try {
+    const emailId = event.data?.email_id;
+    if (!emailId) {
+      console.error('Webhook recibido sin email_id:', event);
+      return res.status(400).json({ error: 'Missing email_id' });
+    }
+
+    // Recuperar el contenido completo del email desde la API de Resend
+    const getResp = await fetch(`https://api.resend.com/emails/receiving/${emailId}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!getResp.ok) {
+      const txt = await getResp.text();
+      console.error('Error al obtener email recibido:', txt);
+      return res.status(502).json({ error: 'Failed to retrieve received email' });
+    }
+
+    const emailData = await getResp.json();
+    console.log('Email recibido (full):', emailData);
+
+    // Reenviar a la cuenta de ventas (alespi.ventas@outlook.com)
+    const forwardHtml = `
+      <p><strong>From:</strong> ${emailData.from}</p>
+      <p><strong>To:</strong> ${ (emailData.to || []).join(', ') }</p>
+      <p><strong>Subject:</strong> ${emailData.subject || ''}</p>
+      <hr/>
+      ${emailData.html || ('<pre>' + (emailData.text || '') + '</pre>')}
+    `;
+
+    const forwardPayload = {
+      from: `ALESPI Inbound <${fromAddress}>`,
+      to: ['alespi.ventas@outlook.com'],
+      subject: `FWD: ${emailData.subject || '(sin asunto)'}`,
+      html: forwardHtml
+    };
+
+    const sendResp = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(forwardPayload)
+    });
+
+    const sendText = await sendResp.text();
+    if (!sendResp.ok) {
+      console.error('Error re-enviando email a ventas:', sendText);
+      return res.status(502).json({ error: 'Failed to forward email' });
+    }
+
+    console.log('Email reenviado a alespi.ventas@outlook.com:', sendText);
+    return res.status(200).json({ ok: true });
+  } catch (err) {
+    console.error('Webhook processing error:', err);
+    return res.status(500).json({ error: 'Internal error' });
   }
 });
 

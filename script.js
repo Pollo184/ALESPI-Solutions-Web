@@ -209,31 +209,46 @@ function initializePrivacyModal() {
     }
 
     const showModal = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         modal.classList.remove('hidden');
-        modal.style.display = 'flex';
+        modal.classList.add('flex');
+        Object.assign(modal.style, {
+            display: 'flex',
+            position: 'fixed',
+            top: '0',
+            left: '0',
+            right: '0',
+            bottom: '0',
+            zIndex: '9999',
+            opacity: '1',
+            visibility: 'visible',
+            backgroundColor: 'rgba(15, 23, 42, 0.88)'
+        });
         document.body.style.overflow = 'hidden';
     };
 
     const hideModal = () => {
         modal.classList.add('hidden');
         modal.style.display = 'none';
+        modal.style.opacity = '0';
+        modal.style.visibility = 'hidden';
         document.body.style.overflow = '';
     };
 
-    document.body.addEventListener('click', (event) => {
-        const openButton = event.target.closest('[data-open-privacy]');
-        if (openButton) {
+    const openButtons = document.querySelectorAll('[data-open-privacy]');
+    openButtons.forEach((button) => {
+        button.addEventListener('click', (event) => {
             event.preventDefault();
             showModal();
-            return;
-        }
+        });
+    });
 
-        const closeButton = event.target.closest('[data-close-privacy]');
-        if (closeButton) {
+    const closeButtons = document.querySelectorAll('[data-close-privacy]');
+    closeButtons.forEach((button) => {
+        button.addEventListener('click', (event) => {
             event.preventDefault();
             hideModal();
-            return;
-        }
+        });
     });
 
     modal.addEventListener('click', (event) => {
