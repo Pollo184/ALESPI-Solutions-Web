@@ -19,50 +19,56 @@
   </div>
 </footer>
 
-<div id="privacy-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-950/75 p-4 sm:p-6" style="background-color: rgba(15, 23, 42, 0.88);">
-  <div class="privacy-modal-panel mx-auto w-full max-w-3xl sm:max-w-4xl rounded-[2rem] bg-white text-slate-900 shadow-2xl ring-1 ring-slate-200 overflow-hidden flex flex-col">
-    <div class="sticky top-0 z-20 border-b border-slate-200 bg-slate-50/95 backdrop-blur-sm p-5 sm:p-6">
-      <div class="flex items-start justify-between gap-4">
-        <div>
-          <h3 class="text-2xl font-bold">Aviso de Privacidad</h3>
-          <p class="text-sm text-slate-500 mt-1">Última actualización: Junio 2026</p>
-        </div>
-        <button type="button" data-close-privacy class="text-slate-500 hover:text-slate-900 text-3xl leading-none" aria-label="Cerrar aviso de privacidad">×</button>
+<div id="privacy-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-950/75 p-3 sm:p-4" style="background-color: rgba(15, 23, 42, 0.88);">
+  <div class="privacy-modal-panel mx-auto rounded-2xl bg-white text-slate-900 shadow-2xl ring-1 ring-slate-200 overflow-hidden flex flex-col max-h-[90vh]" style="width: 560px; max-width: 90vw;">
+    <div class="sticky top-0 z-20 border-b border-slate-200 bg-slate-50/95 backdrop-blur-sm p-3 sm:p-4">
+      <div class="flex items-start justify-between gap-3">
+        <h3 class="text-xl font-bold">Aviso de Privacidad</h3>
+        <button type="button" data-close-privacy class="text-slate-500 hover:text-slate-900 text-2xl leading-none flex-shrink-0" aria-label="Cerrar aviso de privacidad">×</button>
       </div>
     </div>
-    <div class="privacy-modal-body overflow-y-auto px-5 py-5 text-slate-700 leading-relaxed sm:px-6" style="text-align: justify;">
-        <p>En ALESPI Solutions, nos comprometemos a proteger la privacidad y los datos personales de nuestros usuarios.</p>
-      <p>La información recopilada a través de formularios de contacto, correos electrónicos o cualquier medio dentro de este sitio web será utilizada únicamente para fines de comunicación, atención a clientes, cotizaciones y mejora de nuestros servicios.</p>
-      <div>
-        <p class="font-semibold">Información que podemos recopilar</p>
-        <ul class="list-disc list-inside space-y-1 text-slate-600 mt-2">
-          <li>Nombre</li>
-          <li>Correo electrónico</li>
-          <li>Número telefónico</li>
-          <li>Información relacionada con solicitudes o proyectos</li>
-        </ul>
-      </div>
-      <div>
-        <p class="font-semibold">Uso de cookies</p>
-        <p>Este sitio puede utilizar cookies y tecnologías similares para mejorar la experiencia del usuario, analizar el tráfico y optimizar el funcionamiento del sitio web. Las cookies no recopilan información sensible y pueden deshabilitarse desde la configuración de su navegador.</p>
-      </div>
-      <div>
-        <p class="font-semibold">Protección de datos</p>
-        <p>ALESPI Solutions implementa medidas de seguridad razonables para proteger la información de los usuarios contra accesos no autorizados, alteraciones o divulgación indebida.</p>
-      </div>
-      <div>
-        <p class="font-semibold">Compartición de información</p>
-        <p>No vendemos ni compartimos información personal con terceros, salvo cuando sea necesario para proporcionar servicios solicitados o por requerimiento legal.</p>
-      </div>
-      <div>
-        <p class="font-semibold">Contacto</p>
-        <p>Si tiene dudas sobre este aviso de privacidad, puede contactarnos mediante el correo electrónico de contacto disponible en este sitio web.</p>
-      </div>
-      <p class="text-sm text-slate-500">Última actualización: Junio 2026</p>
+    <div class="privacy-modal-body overflow-y-auto px-4 py-4 text-slate-700 text-sm leading-relaxed sm:px-5" style="text-align: justify;">
+      <p><strong>AVISO DE PRIVACIDAD</strong></p>
+      <p class="mt-2">ALESPI SOLUTIONS S.A. DE C.V., con domicilio en Calzada Zavaleta 313, Int. 19, Santa Cruz Buenavista, Puebla, Puebla, es responsable del uso y protección de los datos personales recabados a través de su sitio web alespi.mx</p>
+      
+      <p class="mt-3"><strong>DATOS PERSONALES RECABADOS</strong></p>
+      <p>A través del sitio web podrán recabarse:</p>
+      <ul class="list-disc list-inside space-y-1 text-slate-600 mt-1">
+        <li>Nombre</li>
+        <li>Correo electrónico</li>
+        <li>Número de WhatsApp o teléfono de contacto</li>
+      </ul>
+      
+      <p class="mt-3"><strong>FINALIDADES DEL TRATAMIENTO</strong></p>
+      <p>Los datos personales serán utilizados para:</p>
+      <ul class="list-disc list-inside space-y-1 text-slate-600 mt-1">
+        <li>Dar seguimiento a solicitudes de información</li>
+        <li>Contactar a clientes o prospectos</li>
+        <li>Brindar información comercial o de servicios</li>
+        <li>Atención vía WhatsApp, correo electrónico o teléfono</li>
+        <li>Elaboración de cotizaciones y propuestas comerciales</li>
+      </ul>
+      
+      <p class="mt-3"><strong>TRANSFERENCIA DE DATOS</strong></p>
+      <p>ALESPI SOLUTIONS S.A. DE C.V. no transferirá sus datos personales a terceros sin consentimiento, salvo las excepciones previstas por la legislación aplicable.</p>
+      
+      <p class="mt-3"><strong>DERECHOS ARCO</strong></p>
+      <p>Usted podrá ejercer sus derechos de Acceso, Rectificación, Cancelación u Oposición (ARCO) mediante solicitud dirigida al área responsable de protección de datos de la empresa.</p>
+      
+      <p class="mt-3"><strong>MEDIDAS DE SEGURIDAD</strong></p>
+      <p>La empresa implementa medidas administrativas, técnicas y físicas necesarias para proteger los datos personales contra daño, pérdida, alteración o acceso no autorizado.</p>
+      
+      <p class="mt-3"><strong>FUNDAMENTO LEGAL</strong></p>
+      <p>El presente aviso se emite conforme a los artículos 5, 14, 15, 16 y 18 de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
+      
+      <p class="mt-3"><strong>CAMBIOS AL AVISO</strong></p>
+      <p>La empresa podrá modificar el presente aviso de privacidad conforme a cambios legales, operativos o internos. Las modificaciones serán publicadas en el sitio web oficial.</p>
+      
+      <p class="text-xs text-slate-500 mt-4 pt-2 border-t">Última actualización: 29 de mayo de 2026</p>
     </div>
-    <div class="sticky bottom-0 z-20 border-t border-slate-200 bg-slate-50/95 backdrop-blur-sm p-5 sm:p-6">
+    <div class="sticky bottom-0 z-20 border-t border-slate-200 bg-slate-50/95 backdrop-blur-sm p-3 sm:p-4">
       <div class="flex justify-end">
-        <button type="button" data-close-privacy class="rounded-full bg-primary-500 px-5 py-3 text-white hover:bg-primary-600 transition">Cerrar</button>
+        <button type="button" data-close-privacy class="rounded-full bg-primary-500 px-4 py-2 text-sm text-white hover:bg-primary-600 transition">Cerrar</button>
       </div>
     </div>
   </div>
