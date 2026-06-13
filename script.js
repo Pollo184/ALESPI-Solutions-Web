@@ -156,9 +156,8 @@ function initializeContactForm() {
             return;
         }
 
-        const payload = { nombre, email, empresa, asunto, mensaje };
         const submitButton = formularioContacto.querySelector('button[type="submit"]');
-        const originalButtonText = submitButton ? submitButton.textContent : null;
+        const originalButtonText = submitButton?.textContent;
 
         if (submitButton) {
             submitButton.disabled = true;
@@ -166,33 +165,47 @@ function initializeContactForm() {
         }
 
         try {
-            const response = await fetch('/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            });
+            const response = await emailjs.send(
+                "service_jct37c5",
+                "template_4nys7kf",
+                {
+                    nombre,
+                    email,
+                    empresa,
+                    asunto,
+                    mensaje
+                }
+            );
 
-            const responseText = await response.text();
-            let result = null;
+            // Correo a ALESPI (admin)
+            await emailjs.send(
+                "service_jct37c5",
+                "template_2yuc1er",
+            {
+                nombre,
+                email,
+                empresa,
+                asunto,
+                mensaje
+         }
+    );
 
-            try {
-                result = responseText ? JSON.parse(responseText) : null;
-            } catch (parseError) {
-                result = null;
-            }
+            console.log("Email enviado:", response);
 
-            if (!response.ok) {
-                const errorMessage = result?.error || responseText || response.statusText || 'No se pudo enviar el formulario.';
-                throw new Error(errorMessage);
-            }
+            mostrarNotificacion(
+                '¡Mensaje recibido! Pronto recibirás una confirmación en tu correo.',
+                'success'
+            );
 
-            mostrarNotificacion('¡Mensaje recibido! Pronto recibirás una confirmación en tu correo.', 'success');
             formularioContacto.reset();
+
         } catch (error) {
-            console.error(error);
-            mostrarNotificacion(error.message || 'Ocurrió un error al enviar el formulario.', 'error');
+            console.error("Error EmailJS:", error);
+
+            mostrarNotificacion(
+                error?.text || 'Ocurrió un error al enviar el formulario.',
+                'error'
+            );
         } finally {
             if (submitButton) {
                 submitButton.disabled = false;
