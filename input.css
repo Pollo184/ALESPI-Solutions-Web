@@ -1500,9 +1500,40 @@
 }
 
 @media (max-width: 767px) {
+  .expertiz-showcase {
+    gap: 1rem;
+  }
+
   .expertiz-gallery,
   .expertiz-gallery-inner {
     height: 300px;
+    max-width: 100%;
+  }
+
+  .expertiz-summary-card {
+    min-height: auto;
+    padding: 1.35rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
+  }
+
+  .expertiz-summary-card h3 {
+    margin-top: 0;
+    font-size: 1.65rem;
+    line-height: 1.15;
+  }
+
+  .expertiz-summary-card ul {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .expertiz-summary-card ul li {
+    padding-left: 0.95rem;
+    word-break: break-word;
+    overflow-wrap: anywhere;
   }
 
   .expertiz-video-player {
