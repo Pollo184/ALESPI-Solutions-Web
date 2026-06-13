@@ -1,22 +1,54 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const nodemailer = require('nodemailer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const RESEND_API_KEY = process.env.RESEND_API_KEY?.trim();
-const RESEND_FROM = process.env.RESEND_FROM?.trim() || 'noreply@notify.alespi.mx';
-const RESEND_REPLY_TO = process.env.RESEND_REPLY_TO?.trim();
+const SMTP_HOST = process.env.SMTP_HOST?.trim() || 'smtp.office365.com';
+const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
+const SMTP_SECURE = process.env.SMTP_SECURE === 'true' || process.env.SMTP_SECURE === '1';
+const SMTP_USER = process.env.SMTP_USER?.trim();
+const SMTP_PASS = process.env.SMTP_PASS?.trim();
+const SMTP_FROM = process.env.SMTP_FROM?.trim() || SMTP_USER;
+const SMTP_AUTH_METHOD = process.env.SMTP_AUTH_METHOD?.trim() || (SMTP_HOST.includes('outlook') || SMTP_HOST.includes('office365') ? 'XOAUTH2' : 'LOGIN');
+const SMTP_CLIENT_ID = process.env.SMTP_CLIENT_ID?.trim();
+const SMTP_CLIENT_SECRET = process.env.SMTP_CLIENT_SECRET?.trim();
+const SMTP_REFRESH_TOKEN = process.env.SMTP_REFRESH_TOKEN?.trim();
+const SMTP_ACCESS_TOKEN = process.env.SMTP_ACCESS_TOKEN?.trim();
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const nameRegex = /^[^\d]+$/;
 
-if (!RESEND_API_KEY) {
-  console.error('ERROR: No se encontró RESEND_API_KEY en .env. Agrega tu clave de Resend en el archivo .env.');
+if (!SMTP_USER || !SMTP_PASS) {
+  console.error('ERROR: No se encontró SMTP_USER o SMTP_PASS en .env.');
   process.exit(1);
 }
 
-const fromAddress = RESEND_FROM;
+const transporter = nodemailer.createTransport({
+  host: SMTP_HOST,
+  port: SMTP_PORT,
+  secure: SMTP_SECURE,
+  requireTLS: true,
+  authMethod: SMTP_AUTH_METHOD,
+  auth: SMTP_AUTH_METHOD === 'XOAUTH2' && SMTP_CLIENT_ID && SMTP_CLIENT_SECRET && SMTP_REFRESH_TOKEN
+    ? {
+        type: 'OAuth2',
+        user: SMTP_USER,
+        clientId: SMTP_CLIENT_ID,
+        clientSecret: SMTP_CLIENT_SECRET,
+        refreshToken: SMTP_REFRESH_TOKEN,
+        accessToken: SMTP_ACCESS_TOKEN,
+      }
+    : {
+        user: SMTP_USER,
+        pass: SMTP_PASS,
+      },
+});
+
+if (SMTP_HOST.includes('outlook') || SMTP_HOST.includes('office365')) {
+  console.warn('Advertencia: Outlook/Office 365 suele requerir SMTP AUTH habilitado o un app password para enviar correos con contraseña.');
+}
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
@@ -93,120 +125,53 @@ app.post('/api/contact', async (req, res) => {
 </html>`;
 
   try {
-    const payload = {
-      from: `ALESPI Solutions <${fromAddress}>`,
-      to: [normalizedEmail],
+    await transporter.sendMail({
+      from: `ALESPI Solutions <${SMTP_FROM || SMTP_USER}>`,
+      to: 'alespi.ventas@outlook.com',
+      replyTo: normalizedEmail,
+      subject: `Nueva solicitud: ${asunto.trim()}`,
+      text: `Nueva solicitud de contacto\n\nNombre: ${nombre.trim()}\nEmail: ${email.trim()}\nEmpresa: ${empresa.trim()}\nAsunto: ${asunto.trim()}\n\n${mensaje.trim()}`,
+      html: `
+        <h2>Nueva solicitud de contacto</h2>
+        <p><strong>Nombre:</strong> ${nombre.trim()}</p>
+        <p><strong>Email:</strong> ${email.trim()}</p>
+        <p><strong>Empresa:</strong> ${empresa.trim()}</p>
+        <p><strong>Asunto:</strong> ${asunto.trim()}</p>
+        <hr />
+        <p>${mensaje.trim().replace(/\n/g, '<br>')}</p>
+      `
+    });
+
+    await transporter.sendMail({
+      from: `ALESPI Solutions <${SMTP_FROM || SMTP_USER}>`,
+      to: normalizedEmail,
       subject,
       text,
       html
-    };
-
-    // Añadir Reply-To si está configurado
-    if (RESEND_REPLY_TO) {
-      payload.headers = { 'Reply-To': RESEND_REPLY_TO };
-    }
-
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
     });
 
-    const responseText = await response.text();
-    let responseBody;
-    try {
-      responseBody = responseText ? JSON.parse(responseText) : null;
-    } catch (err) {
-      responseBody = responseText;
-    }
-
-    if (!response.ok) {
-      console.error('Resend API error:', responseBody);
-      return res.status(502).json({ error: 'No se pudo enviar el correo de confirmación. Intenta de nuevo más tarde.' });
-    }
-
-    // Log de éxito para depuración
-    console.log('Resend API success:', responseBody);
-
-    return res.status(200).json({ success: true, message: 'Correo de confirmación enviado.' });
+    return res.status(200).json({ success: true, message: 'Correos enviados correctamente.' });
   } catch (error) {
-    console.error('Resend error:', error);
-    return res.status(500).json({ error: 'Error al enviar el correo de confirmación. Intenta de nuevo más tarde.' });
+    const msg = error?.code === 'EAUTH' || error?.responseCode === 535
+      ? 'La autenticación SMTP falló. Si usas Outlook/Office 365, habilita SMTP AUTH o usa un app password; si usas Gmail, usa una contraseña de aplicación.'
+      : 'Error al enviar los correos. Intenta de nuevo más tarde.';
+
+    console.error('SMTP error:', error);
+    return res.status(500).json({ error: msg });
   }
 });
 
-// Webhook para recibir eventos de Resend (email.received)
-app.post('/api/webhook', async (req, res) => {
-  const event = req.body;
-
-  if (!event || event.type !== 'email.received') {
-    return res.status(200).json({ ok: true });
-  }
-
+app.get('/api/test-mail', async (req, res) => {
   try {
-    const emailId = event.data?.email_id;
-    if (!emailId) {
-      console.error('Webhook recibido sin email_id:', event);
-      return res.status(400).json({ error: 'Missing email_id' });
-    }
+    await transporter.verify();
+    return res.status(200).json({ success: true, message: 'SMTP verificado correctamente.' });
+  } catch (error) {
+    const msg = error?.code === 'EAUTH' || error?.responseCode === 535
+      ? 'La autenticación SMTP falló. Para Outlook necesitas un app password o SMTP AUTH habilitado en la cuenta.'
+      : 'No se pudo verificar el SMTP.';
 
-    // Recuperar el contenido completo del email desde la API de Resend
-    const getResp = await fetch(`https://api.resend.com/emails/receiving/${emailId}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json'
-      }
-    });
-
-    if (!getResp.ok) {
-      const txt = await getResp.text();
-      console.error('Error al obtener email recibido:', txt);
-      return res.status(502).json({ error: 'Failed to retrieve received email' });
-    }
-
-    const emailData = await getResp.json();
-    console.log('Email recibido (full):', emailData);
-
-    // Reenviar a la cuenta de ventas (alespi.ventas@outlook.com)
-    const forwardHtml = `
-      <p><strong>From:</strong> ${emailData.from}</p>
-      <p><strong>To:</strong> ${ (emailData.to || []).join(', ') }</p>
-      <p><strong>Subject:</strong> ${emailData.subject || ''}</p>
-      <hr/>
-      ${emailData.html || ('<pre>' + (emailData.text || '') + '</pre>')}
-    `;
-
-    const forwardPayload = {
-      from: `ALESPI Inbound <${fromAddress}>`,
-      to: ['alespi.ventas@outlook.com'],
-      subject: `FWD: ${emailData.subject || '(sin asunto)'}`,
-      html: forwardHtml
-    };
-
-    const sendResp = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(forwardPayload)
-    });
-
-    const sendText = await sendResp.text();
-    if (!sendResp.ok) {
-      console.error('Error re-enviando email a ventas:', sendText);
-      return res.status(502).json({ error: 'Failed to forward email' });
-    }
-
-    console.log('Email reenviado a alespi.ventas@outlook.com:', sendText);
-    return res.status(200).json({ ok: true });
-  } catch (err) {
-    console.error('Webhook processing error:', err);
-    return res.status(500).json({ error: 'Internal error' });
+    console.error('SMTP verify error:', error);
+    return res.status(500).json({ success: false, error: msg });
   }
 });
 
