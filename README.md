@@ -1,6 +1,6 @@
 # ALESPI Solutions Web
 
-Landing page corporativa para ALESPI Solutions, enfocada en presentar servicios HVAC, experiencia técnica, credenciales y canales de contacto en una interfaz moderna, responsiva y modular.
+Landing page corporativa para ALESPI Solutions, enfocada en presentar servicios HVAC&R, experiencia técnica, credenciales y canales de contacto en una interfaz moderna, responsiva y modular.
 
 El proyecto está construido con HTML, Tailwind CSS, PostCSS y JavaScript vanilla. La página principal carga parciales HTML desde `src/` para mantener una estructura más limpia y profesional.
 

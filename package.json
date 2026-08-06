@@ -1,7 +1,7 @@
 {
   "name": "alespi-soluions-web",
   "version": "1.0.0",
-  "description": "Landing page corporativa de ALESPI Solutions para presentar servicios HVAC, experiencia y contacto.",
+  "description": "Landing page corporativa de ALESPI Solutions para presentar servicios HVAC&R, experiencia y contacto.",
   "private": true,
   "main": "script.js",
   "scripts": {
@@ -19,7 +19,7 @@
   },
   "keywords": [
     "alespi",
-    "hvac",
+    "hvac-r",
     "landing-page",
     "tailwindcss",
     "frontend"
